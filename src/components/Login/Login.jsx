@@ -1,31 +1,60 @@
 import React, { Component } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import PropTypes from 'prop-types';
 import FacebookLogin from 'react-facebook-login';
+import { DataContext } from '../../context/DataProvder';
+import Panel from '../../helpers/Panel';
 import fbPlacesImg from '../../media/fbplaces.jpg';
 
 class Login extends Component {
-    clickHandler = () => console.log('clicked');
+    clickHandler = () => {
+      const { fbAuthenticated, login, history } = this.props;
+      if (fbAuthenticated) login(history.push);
+    };
 
-    responseHandler = response => console.log('res', response);
+    responseHandler = (response) => {
+      const {
+        fbAuthenticated, getFBdata, login, history,
+      } = this.props;
+      if (fbAuthenticated) {
+        login(history.push);
+      } else {
+        getFBdata(response);
+      }
+    }
 
     render() {
       return (
-        <Card style={{ margin: '50px auto', maxWidth: 345 }}>
-          <CardMedia style={{ height: 140 }} image={fbPlacesImg} title="Facebook Places" />
-          <CardContent>
-            <FacebookLogin
-              autoLoad
-              appId="1906696502957358"
-              fields="name,email,picture"
-              onClick={this.clickHandler}
-              callback={this.responseHandler}
-            />
-          </CardContent>
-        </Card>
+        <Panel image={fbPlacesImg} title="Facebook Places">
+          <FacebookLogin
+            autoLoad
+            appId="1906696502957358"
+            fields="name,email,picture"
+            onClick={this.clickHandler}
+            callback={this.responseHandler}
+          />
+        </Panel>
       );
     }
 }
 
-export default Login;
+Login.propTypes = {
+  fbAuthenticated: PropTypes.bool.isRequired,
+  getFBdata: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  history: PropTypes.shape({}).isRequired,
+};
+
+const LoginWithContext = props => (
+  <DataContext.Consumer>
+    {dataContext => (
+      <Login
+        fbAuthenticated={dataContext.state.fbAuthenticated}
+        getFBdata={dataContext.actions.getFBdata}
+        login={dataContext.actions.login}
+        {...props}
+      />
+    )}
+  </DataContext.Consumer>
+);
+
+export default LoginWithContext;
