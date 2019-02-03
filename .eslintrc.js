@@ -7,6 +7,7 @@ module.exports = {
         "import"
     ],
     "rules": {
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "max-len": [2, 130, 4]
     }
 };
