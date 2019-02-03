@@ -9,33 +9,46 @@ export const DataContext = createContext();
 class DataProvider extends Component {
   state = {
     loggedIn: false,
-    fbAuthenticated: false,
     name: '',
     email: '',
     image: '',
     coords: [],
     accessToken: '',
     places: [],
+    error: false,
+    errorMessage: '',
+    errorState: '',
   }
+
+  displayError = (message, color) => this.setState({ error: true, errorMessage: message, errorState: color });
+
+  removeError = () => this.setState({ error: false, errorMessage: '', errorState: '' });
 
   render() {
     const { children } = this.props;
-
     return (
       <DataContext.Provider
         value={{
           state: { ...this.state },
           actions: {
-            getFBdata: ({
-              name, email, accessToken, picture: { data: { url } },
-            }) => {
-              this.setState({
-                name,
-                email,
-                accessToken,
-                fbAuthenticated: true,
-                image: url,
-              });
+            getFBdata: (response) => {
+              if (response.name) {
+                const {
+                  name, email, accessToken, picture: { data: { url } },
+                } = response;
+                this.setState({
+                  name,
+                  email,
+                  accessToken,
+                  image: url,
+                });
+              } else if (response.status === undefined) {
+                this.displayError('Error occured: Network problems', 'red');
+              } else if (response.status === 'unknown') {
+                this.displayError('Warning: You have to login using your Facebook account', '#ff9800');
+              } else {
+                this.displayError('Error occured: Unknown problems', 'red');
+              }
             },
             login: (redirectTo) => {
               this.setState({ loggedIn: true });
@@ -48,17 +61,21 @@ class DataProvider extends Component {
                     resolve(this.setState({ coords: [latitude, longitude] }));
                   });
               } else {
-                reject(new Error('No available Geolocation'));
+                reject(this.displayError('Error occured: Can\'t fetch coordinates', 'red'));
               }
             }),
             getFacebookPlaces: async () => {
               const { coords, accessToken } = this.state;
-              const results = await getFacebookPlacesData(coords, accessToken);
-              const { data } = results.data;
-              const places = uniqBy(data, 'name').slice(0, 5);
-              console.log('places', places);
-              this.setState({ places });
+              try {
+                const results = await getFacebookPlacesData(coords, accessToken);
+                const { data } = results.data;
+                const places = uniqBy(data, 'name').slice(0, 5);
+                this.setState({ places });
+              } catch (e) {
+                this.displayError('Error occured: Network problems', 'red');
+              }
             },
+            removeError: this.removeError,
           },
         }}
       >

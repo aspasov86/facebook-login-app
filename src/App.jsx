@@ -8,6 +8,7 @@ import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import DataProvider from './context/DataProvder';
+import StatusMessage from './components/StatusMessage/StatusMessage';
 
 const App = () => (
   <div className="App">
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" render={() => <Redirect to="/login" />} />
         </Switch>
       </BrowserRouter>
+      <StatusMessage />
     </DataProvider>
   </div>
 );
