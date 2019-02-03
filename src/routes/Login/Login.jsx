@@ -5,12 +5,9 @@ import { DataContext } from '../../context/DataProvder';
 import Panel from '../../helpers/Panel';
 
 class Login extends Component {
-    responseHandler = async (response) => {
-      const {
-        getFBdata, login, history,
-      } = this.props;
-      await getFBdata(response);
-      login(history.push);
+    responseHandler = (response) => {
+      const { getFBdata, history } = this.props;
+      getFBdata(response, history.push);
     }
 
     render() {
@@ -28,7 +25,6 @@ class Login extends Component {
 
 Login.propTypes = {
   getFBdata: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
 };
 
@@ -37,7 +33,6 @@ const LoginWithContext = props => (
     {dataContext => (
       <Login
         getFBdata={dataContext.actions.getFBdata}
-        login={dataContext.actions.login}
         {...props}
       />
     )}

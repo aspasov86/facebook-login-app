@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
-import UserInfo from '../UserInfo/UserInfo';
+import UserInfo from './UserInfo/UserInfo';
 import Panel from '../../helpers/Panel';
 import Map from './Map/Map';
-import PlacesList from '../PlacesList/PlacesList';
+import PlacesList from './PlacesList/PlacesList';
 import { DataContext } from '../../context/DataProvder';
 
 

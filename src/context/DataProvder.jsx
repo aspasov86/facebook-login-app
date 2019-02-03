@@ -31,7 +31,7 @@ class DataProvider extends Component {
         value={{
           state: { ...this.state },
           actions: {
-            getFBdata: (response) => {
+            getFBdata: (response, redirectTo) => {
               if (response.name) {
                 const {
                   name, email, accessToken, picture: { data: { url } },
@@ -40,19 +40,12 @@ class DataProvider extends Component {
                   name,
                   email,
                   accessToken,
+                  loggedIn: true,
                   image: url,
-                });
-              } else if (response.status === undefined) {
-                this.displayError('Error occured: Network problems', 'red');
-              } else if (response.status === 'unknown') {
-                this.displayError('Warning: You have to login using your Facebook account', '#ff9800');
+                }, () => redirectTo('/dashboard'));
               } else {
-                this.displayError('Error occured: Unknown problems', 'red');
+                this.displayError('Error occured: Failed to login', 'red');
               }
-            },
-            login: (redirectTo) => {
-              this.setState({ loggedIn: true });
-              redirectTo('/dashboard');
             },
             getCoordinates: () => new Promise((resolve, reject) => {
               if (navigator.geolocation) {
