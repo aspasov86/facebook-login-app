@@ -56,7 +56,6 @@ class DataProvider extends Component {
               const locationsData = await Promise.all(placesData.map(place => getFacebookPlaceCoords(place.id, accessToken)));
               const places = placesData.map((place, i) => ({ ...place, location: locationsData[i].data.location }));
               this.setState({ places });
-              console.log('results', places);
             },
           },
         }}
