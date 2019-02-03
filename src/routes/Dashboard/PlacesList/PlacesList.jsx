@@ -22,8 +22,13 @@ const PlacesList = ({ places }) => (
               <Avatar alt="name" src={url} />
             </ListItemAvatar>
             <ListItemText
-              primary={`${index + 1} - ${name}`}
-              secondary={`${location.city}, ${location.country}`}
+              primary={`${index + 1}.  ${name}`}
+              secondary={(
+                <Fragment>
+                  <div>ID: {id}</div>
+                  <div>{location.city}, {location.country}</div>
+                </Fragment>
+              )}
             />
           </ListItem>
         );
