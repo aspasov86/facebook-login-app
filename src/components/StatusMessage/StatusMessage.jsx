@@ -1,40 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import { DataContext } from '../../context/DataProvder';
+import './StatusMessage.css';
 
-class StatusMessage extends Component {
-  render() {
-    const {
-      open, message, background, closeError,
-    } = this.props;
-    return (
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        open={open}
-        autoHideDuration={600}
-        onClose={this.onClose}
-      >
-        <SnackbarContent
-          style={{ background }}
-          message={message}
-          action={[
-            <IconButton
-              key="close"
-              color="inherit"
-              onClick={closeError}
-            >
-              <CloseIcon style={{ fontSize: 20 }} />
-            </IconButton>,
-          ]}
-        />
-      </Snackbar>
-    );
-  }
-}
+const StatusMessage = ({
+  open, message, background, closeError,
+}) => (
+  <Snackbar
+    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+    open={open}
+    autoHideDuration={2000}
+    onClose={closeError}
+  >
+    <SnackbarContent
+      style={{ background }}
+      message={message}
+      action={[
+        <IconButton
+          key="close"
+          color="inherit"
+          onClick={closeError}
+        >
+          <CloseIcon className="status-message-close-icon" />
+        </IconButton>,
+      ]}
+    />
+  </Snackbar>
+);
 
 StatusMessage.propTypes = {
   open: PropTypes.bool.isRequired,

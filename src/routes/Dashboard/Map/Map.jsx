@@ -2,9 +2,10 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import Marker from './Marker';
+import './Map.css';
 
 const Map = ({ coords, places }) => (
-  <div style={{ height: '40vh' }}>
+  <div className="map">
     <GoogleMapReact
       bootstrapURLKeys={{ key: 'AIzaSyA4YY2s_y57R3Q7X4DOflKHchwEHsQCMXI' }}
       defaultCenter={{

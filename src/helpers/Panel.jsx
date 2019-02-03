@@ -4,10 +4,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import fbPlacesImg from '../media/fbplaces.jpg';
+import './Panel.css';
 
 const Panel = ({ children }) => (
-  <Card style={{ margin: '50px auto', maxWidth: 345 }}>
-    <CardMedia style={{ height: 140 }} image={fbPlacesImg} title="Facebook Places" />
+  <Card className="panel-card">
+    <CardMedia className="panel-card-media" image={fbPlacesImg} title="Facebook Places" />
     <CardContent>
       {children}
     </CardContent>

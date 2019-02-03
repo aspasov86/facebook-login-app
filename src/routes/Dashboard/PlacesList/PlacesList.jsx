@@ -6,10 +6,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import './PlacesList.css';
 
 const PlacesList = ({ places }) => (
   <Fragment>
-    <Typography style={{ marginTop: 30 }} color="textSecondary" gutterBottom>CLOSEST FACEBOOK PLACES</Typography>
+    <Typography className="places-list-title" color="textSecondary" gutterBottom>CLOSEST FACEBOOK PLACES</Typography>
     <List>
       {places.map((place, index) => {
         const {

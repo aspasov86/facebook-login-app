@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import './UserInfo.css';
 
 const UserInfo = ({ name, email, image }) => (
   <Fragment>
-    <Avatar alt="name" src={image} style={{ margin: '10px auto', width: 60, height: 60 }} />
+    <Avatar className="user-info-avatar" alt="name" src={image} />
     <Typography color="textSecondary" gutterBottom>FACEBOOK USER</Typography>
     <Typography variant="h6">{name}</Typography>
-    <Typography variant="caption">{email}</Typography>
+    <Typography variant="subheading">{email}</Typography>
     <Divider />
   </Fragment>
 );
