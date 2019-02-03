@@ -18,11 +18,21 @@ class DataProvider extends Component {
     error: false,
     errorMessage: '',
     errorState: '',
+    loading: false,
   }
 
-  displayError = (message, color) => this.setState({ error: true, errorMessage: message, errorState: color });
+  displayError = (message, color) => this.setState({
+    error: true,
+    errorMessage: message,
+    errorState: color,
+    loading: false,
+  });
 
   removeError = () => this.setState({ error: false, errorMessage: '', errorState: '' });
+
+  startLoader = () => this.setState({ loading: true });
+
+  closeLoader = () => this.setState({ loading: false });
 
   render() {
     const { children } = this.props;
@@ -41,6 +51,7 @@ class DataProvider extends Component {
                   email,
                   accessToken,
                   loggedIn: true,
+                  loading: false,
                   image: url,
                 }, () => redirectTo('/dashboard'));
               } else {
@@ -48,6 +59,7 @@ class DataProvider extends Component {
               }
             },
             getCoordinates: () => new Promise((resolve, reject) => {
+              this.setState({ loading: true });
               if (navigator.geolocation) {
                 navigator.geolocation
                   .getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -63,12 +75,14 @@ class DataProvider extends Component {
                 const results = await getFacebookPlacesData(coords, accessToken);
                 const { data } = results.data;
                 const places = uniqBy(data, 'name').slice(0, 5);
-                this.setState({ places });
+                this.setState({ places, loading: false });
               } catch (e) {
                 this.displayError('Error occured: Network problems', 'red');
               }
             },
+            startLoader: this.startLoader,
             removeError: this.removeError,
+            closeLoader: this.closeLoader,
           },
         }}
       >

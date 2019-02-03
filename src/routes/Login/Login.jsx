@@ -11,11 +11,13 @@ class Login extends Component {
     }
 
     render() {
+      const { startLoader } = this.props;
       return (
         <Panel>
           <FacebookLogin
             appId="1906696502957358"
             fields="name,email,picture"
+            onClick={startLoader}
             callback={this.responseHandler}
           />
         </Panel>
@@ -25,6 +27,7 @@ class Login extends Component {
 
 Login.propTypes = {
   getFBdata: PropTypes.func.isRequired,
+  startLoader: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
 };
 
@@ -33,6 +36,7 @@ const LoginWithContext = props => (
     {dataContext => (
       <Login
         getFBdata={dataContext.actions.getFBdata}
+        startLoader={dataContext.actions.startLoader}
         {...props}
       />
     )}
