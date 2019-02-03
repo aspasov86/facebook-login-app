@@ -16,7 +16,7 @@ const Panel = ({ children, image, title }) => (
 Panel.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.array,
   ]).isRequired,
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

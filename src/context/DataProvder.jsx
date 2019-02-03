@@ -1,7 +1,8 @@
 /* eslint-env browser */
 import React, { Component, createContext } from 'react';
 import PropTypes from 'prop-types';
-import { getFacebookPlacesInfo, getFacebookPlaceCoords } from '../service/facebookPlaces';
+import { uniqBy } from 'lodash';
+import getFacebookPlacesData from '../service/facebookPlaces';
 
 export const DataContext = createContext();
 
@@ -19,6 +20,7 @@ class DataProvider extends Component {
 
   render() {
     const { children } = this.props;
+
     return (
       <DataContext.Provider
         value={{
@@ -51,10 +53,9 @@ class DataProvider extends Component {
             }),
             getFacebookPlaces: async () => {
               const { coords, accessToken } = this.state;
-              const results = await getFacebookPlacesInfo(coords, accessToken);
-              const placesData = results.data.data;
-              const locationsData = await Promise.all(placesData.map(place => getFacebookPlaceCoords(place.id, accessToken)));
-              const places = placesData.map((place, i) => ({ ...place, location: locationsData[i].data.location }));
+              const results = await getFacebookPlacesData(coords, accessToken);
+              const { data } = results.data;
+              const places = uniqBy(data, 'name').slice(0, 5);
               this.setState({ places });
             },
           },

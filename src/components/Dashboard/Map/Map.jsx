@@ -11,16 +11,20 @@ const Map = ({ coords, places }) => (
         lat: coords[0],
         lng: coords[1],
       }}
-      defaultZoom={11}
+      defaultZoom={15}
     >
-      {places.map(place => (
-        <Marker
-          key={place.name}
-          title={place.name}
-          lat={place.latitude}
-          lng={place.longitude}
-        />
-      ))}
+      {places.map((place) => {
+        const { name } = place;
+        const { latitude, longitude } = place.location;
+        return (
+          <Marker
+            key={name}
+            title={name}
+            lat={latitude}
+            lng={longitude}
+          />
+        );
+      })}
     </GoogleMapReact>
   </div>
 );
@@ -31,7 +35,7 @@ Map.defaultProps = {
 };
 
 Map.propTypes = {
-  coords: PropTypes.string,
+  coords: PropTypes.arrayOf(PropTypes.number),
   places: PropTypes.arrayOf(PropTypes.object),
 };
 
