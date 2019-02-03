@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 import UserInfo from '../UserInfo/UserInfo';
 import Panel from '../../helpers/Panel';
 import Map from './Map/Map';
+import PlacesList from '../PlacesList/PlacesList';
 import { DataContext } from '../../context/DataProvder';
 
 
@@ -27,12 +28,15 @@ class Dashboard extends Component {
       },
     } = this.props;
     return (
-      <Panel image={image} title="User Info">
-        <UserInfo name={name} email={email} />
+      <Fragment>
+        <Panel>
+          <UserInfo name={name} email={email} image={image} />
+          <PlacesList places={places} />
+        </Panel>
         {!isEmpty(places) && (
           <Map coords={coords} places={places} />
         )}
-      </Panel>
+      </Fragment>
     );
   }
 }

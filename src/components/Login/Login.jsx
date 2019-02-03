@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import FacebookLogin from 'react-facebook-login';
 import { DataContext } from '../../context/DataProvder';
 import Panel from '../../helpers/Panel';
-import fbPlacesImg from '../../media/fbplaces.jpg';
 
 class Login extends Component {
     clickHandler = () => {
@@ -24,7 +23,7 @@ class Login extends Component {
 
     render() {
       return (
-        <Panel image={fbPlacesImg} title="Facebook Places">
+        <Panel>
           <FacebookLogin
             autoLoad
             appId="1906696502957358"

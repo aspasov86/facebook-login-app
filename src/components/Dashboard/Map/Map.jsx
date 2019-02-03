@@ -13,12 +13,13 @@ const Map = ({ coords, places }) => (
       }}
       defaultZoom={15}
     >
-      {places.map((place) => {
+      {places.map((place, index) => {
         const { name } = place;
         const { latitude, longitude } = place.location;
         return (
           <Marker
             key={name}
+            index={index}
             title={name}
             lat={latitude}
             lng={longitude}

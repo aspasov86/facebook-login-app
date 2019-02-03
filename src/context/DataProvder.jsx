@@ -56,6 +56,7 @@ class DataProvider extends Component {
               const results = await getFacebookPlacesData(coords, accessToken);
               const { data } = results.data;
               const places = uniqBy(data, 'name').slice(0, 5);
+              console.log('places', places);
               this.setState({ places });
             },
           },

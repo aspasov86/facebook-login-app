@@ -8,6 +8,6 @@ module.exports = {
     ],
     "rules": {
         "linebreak-style": 0,
-        "max-len": [2, 130, 4]
+        "max-len": [2, 130, 4, { "ignoreUrls": true }]
     }
 };
