@@ -62,6 +62,9 @@ class DataProvider extends Component {
               this.setState({ loading: true });
               if (navigator.geolocation) {
                 const permission = await navigator.permissions.query({ name: 'geolocation' });
+                if (permission.state === 'denied') {
+                  reject(this.displayError('Error occured: Can\'t fetch coordinates', 'red'));
+                }
                 permission.onchange = (e) => {
                   const { state } = e.target;
                   if (state === 'denied') {
