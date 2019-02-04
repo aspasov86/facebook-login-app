@@ -58,9 +58,16 @@ class DataProvider extends Component {
                 this.displayError('Error occured: Failed to login', 'red');
               }
             },
-            getCoordinates: () => new Promise((resolve, reject) => {
+            getCoordinates: () => new Promise(async (resolve, reject) => {
               this.setState({ loading: true });
               if (navigator.geolocation) {
+                const permission = await navigator.permissions.query({ name: 'geolocation' });
+                permission.onchange = (e) => {
+                  const { state } = e.target;
+                  if (state === 'denied') {
+                    reject(this.displayError('Error occured: Can\'t fetch coordinates', 'red'));
+                  }
+                };
                 navigator.geolocation
                   .getCurrentPosition(({ coords: { latitude, longitude } }) => {
                     resolve(this.setState({ coords: [latitude, longitude] }));

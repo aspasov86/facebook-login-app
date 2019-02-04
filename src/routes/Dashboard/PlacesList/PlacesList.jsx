@@ -25,8 +25,8 @@ const PlacesList = ({ places }) => (
               primary={`${index + 1}.  ${name}`}
               secondary={(
                 <Fragment>
-                  <div>ID: {id}</div>
-                  <div>{location.city}, {location.country}</div>
+                  <span>ID: {id}</span><br />
+                  <span>{location.city}, {location.country}</span>
                 </Fragment>
               )}
             />
